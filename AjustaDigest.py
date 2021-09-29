@@ -45,13 +45,16 @@ class Window:
 
     def deleteXML(self, keyXML):
         nfeXML = "-nfe.xml"
+        oldXML = "-nfe_old.xml"
         for root, dirs, files in os.walk(dirUsed):
             for dir in dirs:
                 if dir.lower() == "lognfce":
+                    keyXMLold = keyXML + oldXML
                     keyXML += nfeXML
                     pathLogNfe = os.path.join(root,dir)
                     pathKeyXml = os.path.join(pathLogNfe, keyXML)
-                    os.remove(pathKeyXml)
+                    pathOldNfe = os.path.join(pathLogNfe, keyXMLold)
+                    os.rename(pathKeyXml, pathOldNfe)
                     messagebox.showwarning("Ajusta Digest Value", "Abra o seu Emissor de NFCe e consulte a nota novamente!")
     
     def closeWindow(self):
