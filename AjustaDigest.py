@@ -46,16 +46,23 @@ class Window:
     def deleteXML(self, keyXML):
         nfeXML = "-nfe.xml"
         oldXML = "-nfe_old.xml"
+        checkLogNfce = False
         for root, dirs, files in os.walk(dirUsed):
             for dir in dirs:
                 if dir.lower() == "lognfce":
-                    keyXMLold = keyXML + oldXML
-                    keyXML += nfeXML
-                    pathLogNfe = os.path.join(root,dir)
-                    pathKeyXml = os.path.join(pathLogNfe, keyXML)
-                    pathOldNfe = os.path.join(pathLogNfe, keyXMLold)
-                    os.rename(pathKeyXml, pathOldNfe)
-                    messagebox.showwarning("Ajusta Digest Value", "Abra o seu Emissor de NFCe e consulte a nota novamente!")
+                    try:
+                        keyXMLold = keyXML + oldXML
+                        keyXML += nfeXML
+                        checkLogNfce = True
+                        pathLogNfe = os.path.join(root,dir)
+                        pathKeyXml = os.path.join(pathLogNfe, keyXML)
+                        pathOldNfe = os.path.join(pathLogNfe, keyXMLold)
+                        os.rename(pathKeyXml, pathOldNfe)
+                        messagebox.showinfo("Ajusta Digest Value", "Abra o seu Emissor de NFCe e consulte a nota novamente!")
+                    except:
+                        messagebox.showerror("Ajusta Digest Value", "Erro no extensão do arquivo!\nEntre em contato com o Suporte Técnico")
+        if checkLogNfce is False:
+            messagebox.showwarning("Ajusta Digest Value", "Pasta logNFCe não encontrada!\nEntre em contato com o Suporte Técnico!")
     
     def closeWindow(self):
         root.quit()
